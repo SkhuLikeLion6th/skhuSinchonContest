@@ -1,0 +1,17 @@
+당신이 가진 <%=@find_post.had_card%>카드는 총 <%=@wantpeoplenum%>명이 원하고 있습니다.
+당신이 필요한 <%=@find_post.want_card%>카드는 총 <%=@needpeoplenum%>명이 가지고 있습니다.
+
+<% if @matched_post.count == 0 %>
+    <h1>매칭되는 카드가 없습니다</h1>
+    <a href="/home/new">카드 등록하러가기</a>
+<% else
+    @matched_post.each do |post| %>
+    <p>
+        <img src="<%=post.image.url%>"><br>
+        <%=post.singer%><br>
+        <%=post.album%><br>
+        <%=post.had_card%><br>
+        <%=post.want_card%><br>
+    </p>
+    <% end %>
+<% end %>

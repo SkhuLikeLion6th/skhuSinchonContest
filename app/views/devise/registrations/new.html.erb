@@ -1,0 +1,170 @@
+<!-- ID TEST -->
+<div id="Login_Container">
+  <div id="Signup_content">
+    
+    <p style="margin: 0px; margin-top: 10%; font-size: 40px; color: white;"><b>ㅍㅌ</b></p>
+    <p style="margin: 0px; font-size: 40px; color: white;"><b>ㅋㄷ</b></p>
+  
+    <form action="/users" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      
+      <p>
+        <input id="Login_name" type="text" value="" name="user[name]" id="user_name" placeholder="이름" style="width:70%; height:40px"></input>
+      </p>
+      <p>
+        <input id="Login_email" type="email" value="" name="user[email]" id="user_email" placeholder="이메일" style="width:70%; height:40px"></input>
+      </p>
+      <p>
+        <input id="Login_password" type="password" value="" name="user[password]" id="user_password" placeholder="비밀번호" style="width:70%; height:40px"></input>
+      </p>
+      <p>
+        <input id="Login_password" type="password" value="" name="user[password_confirmation]" id="user_password_confirmation]" placeholder="비밀번호 확인" style="width:70%; height:40px"></input>
+      </p>
+      <p>
+        <input id="Login_button" type="submit" name="commit" value="Sign in" style="width:73%; height:40px; margin-top: 5%;"></input>
+      </p>
+      </form>
+  </div>
+  
+  <div id="Login_Signup" style="margin-bottom: 3%;">
+    <p id="Button_Signup">
+      <%- if controller_name != 'sessions' %>
+        <spwn style="color: white; margin-right: 1%;">계정이 있으신가요?</spwn> <%= link_to "로그인 하기", new_session_path(resource_name) %><br />
+      <% end -%>
+    </p>
+  </div>
+</div>
+
+<style>
+
+  @font-face { 
+    font-family: 'Godo'; 
+    font-style: normal; 
+    font-weight: 400; 
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoM.woff2') 
+    format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoM.woff') 
+    format('woff'); 
+    
+  } 
+  
+  @font-face{ 
+    font-family: 'Godo'; 
+    font-style: normal; 
+    font-weight: 700; 
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoB.woff2') 
+    format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoB.woff') 
+    format('woff');
+  }
+  a{
+    text-decoration: none;
+  }
+  a:visited {
+      color: #FBB448; text-decoration: none;
+      
+  }
+  
+  .p{
+      margin: 0px;
+      margin-left: 2%;
+      margin-bottom: 1%;
+      font-size: 15px;
+  }
+  
+  body{
+    font-family: "Godo";
+      background: rgba(0, 0, 0, 0.85);
+      margin: 0px;
+  }
+  
+  #nav{
+      width: 100%;
+      height: 100px;
+      background-color: white;
+      border-bottom: 1px solid rgba(0,0,0,.0975);
+  }
+  
+  .content{
+      width: 70%;
+      margin: auto;
+      background-color: white;
+      padding-top: 20px;
+  }
+  
+  textarea:hover, 
+  input:hover, 
+  textarea:active, 
+  input:active, 
+  textarea:focus, 
+  input:focus,
+  button:focus,
+  button:active,
+  button:hover,
+  label:focus,
+  .btn:active,
+  .btn.active
+  {
+      outline:0px !important;
+      -webkit-appearance:none;
+  }
+  
+  #Login_Container{
+      margin-top: 5%;
+      text-align: center;
+  }
+  
+  #Login_Content{
+      background-color: #131313;
+      margin: auto;
+      height: 400px;
+      width: 350px;
+      margin-bottom: 1%;
+      border-top: 10px solid #FBB448;
+  }
+  
+  #Signup_content{
+      background-color: #131313;
+      margin: auto;
+      height: 570px;
+      width: 360px;
+      margin-bottom: 1%;
+      border-top: 10px solid #FBB448;
+  }
+  
+  #Login_Signup{
+      background-color: #131313;
+      margin: auto;
+      height: 100px;
+      width: 360px;
+  }
+  
+  #Button_Signup{
+      padding-top: 11%;
+      font-size: 15px;
+      color: #FBB448;
+  }
+  
+  #Nohaveid{
+      color: white;
+      margin-right: 1%;
+  }
+  
+  #Login_button{
+      color: white;
+      background-color: #FBB448;
+      border-color: #FBB448;
+      border-radius: 3px;
+      border-style: solid;
+      font-family: "Godo";
+  }
+  
+  #Login_name,
+  #Login_email, 
+  #Login_password{
+    font-family: "Godo";
+      background-color: #131313;
+      border-radius: 3px;
+      border: 1px solid gray;
+      padding: 5px;
+      color: white;
+  }
+</style>

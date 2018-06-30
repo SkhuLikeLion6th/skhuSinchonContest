@@ -1,0 +1,323 @@
+<div class="gtco-loader"></div>
+	
+	<div id="page">
+
+	
+	<!-- <div class="page-inner"> -->
+	<nav class="gtco-nav" role="navigation" style="background-color:black">
+		<div class="gtco-container">
+			
+			<div class="row">
+				<div class="col-sm-4 col-xs-12">
+					<div id="gtco-logo"><a style="font-size: 25px;" href="/">ㅍㅌㅋㄷ <em>.</em></a></div>
+				</div>
+				<div class="col-xs-8 text-right menu-1">
+					<% if user_signed_in? %>
+						<%= current_user.email%>
+						<%= link_to "/users/sign_out" do %>
+									<span class="btn-cta">Logout</span></a>
+						<% end %>
+					<% else %>
+						    <%=link_to "/users/sign_in" do %>
+							    	<span class="btn-cta">Login</span></a>
+					    	<% end %>
+					    	
+					    	<%=link_to "/users/sign_up" do %>
+							    	<span class="btn-cta">SignUp</span></a>
+						    <% end %>
+					<% end %>
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+	
+	<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-12 col-md-offset-0 text-left">
+					
+
+					<div class="row row-mt-15em">
+						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+							<span style="padding-left: 2.3%;" class="intro-text-small">포토카드교환을위한 <a href="#" target="_blank">platform</a></span>
+							<h1 class="cursive-font">ㅍㅌㅋㄷ</h1>	
+						</div>
+						<div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+							<div class="form-wrap">
+								<div class="tab">
+									
+									<div class="tab-content">
+										<div class="tab-content-inner active" data-content="signup">
+											<h3 class="cursive-font">Search PhotoCard</h3>
+											<%= form_for @search, url: {action: "search"} do |f| %>
+                                              <div class="field">
+                                                <%= f.label :singer_id %><br />
+                                                <%= f.collection_select :singer, Singer.order(:singer_name), :id, :singer_name, include_blank: true %>
+                                              </div>
+                                              <div class="field">
+                                                <%= f.label :album_id, "album" %><br />
+                                                <%= f.grouped_collection_select :album, Singer.order(:singer_name), :albums, :singer_name, :id, :album_name, include_blank: true %>   
+                                                </div>
+                                                <div class="field">
+                                                <%= f.label :had_card, "had card" %><br />
+                                                <%= f.grouped_collection_select :had_card, Singer.order(:singer_name), :members, :singer_name, :id, :member_name, include_blank: true %>   
+                                                </div>                                                
+                                              <div><%= f.submit "Search", class: "btn btn-primary"%></div>
+                                            <% end %>
+												<div class="row form-group">
+													<div class="col-md-12">
+														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+														  Create Card
+														</button>
+													</div>
+													
+												</div>
+											</form>	
+										</div>
+
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+							
+					
+				</div>
+			</div>
+		</div>
+	</header>
+
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div style="width: 350px;" class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Create Card</h5>
+		        <button style="margin-top: -15px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		         <form action="/home/create" method="post" enctype="multipart/form-data">
+			        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+			        <input type="hidden" id="user_id" name="user_id" value="current_user">
+			        <p>
+			            <input id="input_singer" type="text" name="input_singer" placeholder="그룹명을 입력해주세요">
+			        </p>
+			        <p>
+			            <input id="input_album" type="text" name="input_album" placeholder="앨범명을 입력해 주세요">
+			        </p>
+			        <p>
+			            <input id="input_had_card" type="text" name="input_had_card" placeholder="가지고 있는 카드멤버를 입력해주세요">
+			        </p>
+			        <p>
+			            <input id="input_want_card" type="text" name="input_want_card" placeholder="필요한 카드멤버를 입력해 주세요">
+			        </p>
+			        <p>
+			            <input id="input_change_type" type="text" name="input_change_type" placeholder="교환 방식을 입력해주세요">
+			        </p>
+			        <p>
+			            <input id="input_kakao_id" type="text" name="input_kakao_id" placeholder="카카오톡 아이디를 입력해 주세요">
+			        </p>
+			        <p>
+			        	<%= file_field_tag 'input_image' %>
+			        </p>
+				    <div class="modal-footer">
+				      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <input id="input_submit" type="submit"></input>
+			       </div>
+			    </form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+					<h2 class="cursive-font"> 현재 포토카드 랭킹</h2>
+					<p><table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">순위</th>
+      <th scope="col">이름</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>Ll</td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>Lay</td>
+    </tr>
+  </tbody>
+</table>
+
+
+</p>
+				</div>
+			
+			</div>
+		
+						</span>
+						<h3></h3>
+						
+					</div>
+				
+
+			</div>
+		</div>
+	</div>
+											
+
+	<div id="gtco-subscribe">
+		<div class="gtco-container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<h2 class="cursive-font">등록된 포토카드 매칭</h2>
+					<section class="clubs py-3">
+		              <div class="cards row">
+		                <% @posts.each do |post|%>
+		                    <div class='col-sm-12 col-md-6 col-lg-4'>
+		                      <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+		                        <img class="card-img-top" src="<%=post.image.url%>" alt="Card image cap">
+		                        <div class="card-body">
+		                          <h5 class="card-title">가수이름</h5>
+		                        </div>
+		                      </div>
+		                    </div>
+		                  <%end%>
+		              </div>
+		          	</section>
+		         </div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+					<h2 class="cursive-font">ㅍㅌㅋㄷ 사용매뉴얼</h2>
+					<p>ㅍㅌㄱㄷ를 사용하시는 분들은 아래 매뉴얼 및 주의사항을 잘 읽고 이용해주세요:) </p>
+				</div>
+			
+			</div>
+		
+						</span>
+						<h3>STEP1: 회원가입</h3>
+						<p>회원가입을 할때에는 실명과 어쩌고저쩌고</p>
+						<h3>STEP2: 본인이 원하는 포토카드를 검색해주세요</h3>
+						<p>검색해 나오는 분의 포토카드와 교환하려는 포토카드가 일치하면 카톡아이디를 통해 연락해주세요!</p>
+						<h3>주의사항</h3>
+						<p></p>
+					</div>
+				
+
+			</div>
+		</div>
+	</div>
+
+	<div id="gtco-counter" class="gtco-section">
+		<div class="gtco-container">
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+					<h2 class="cursive-font primary-color">ㅍㅌㅋㄷ는 현재,</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				
+				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+					<div class="feature-center">
+						<span class="counter js-counter" data-from="0" data-to="6" data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">그룹</span>
+
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+					<div class="feature-center">
+						<span class="counter js-counter" data-from="0" data-to="43" data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">앨범</span>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+					<div class="feature-center">
+						<span class="counter js-counter" data-from="0" data-to="<%=@postnum%>" data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">포토카드</span>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+					<div class="feature-center">
+						<span class="counter js-counter" data-from="0" data-to="<%=@usernum%>" data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter-label">사용자</span>
+
+					</div>
+				</div>
+					
+			</div>
+		</div>
+	</div>
+
+	
+
+
+
+	<footer id="gtco-footer" role="contentinfo" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row row-pb-md">
+
+				
+
+				
+				<div class="col-md-12 text-center">
+					<div class="gtco-widget">
+						<h3>만든이들</h3>
+						<ul class="gtco-quick-contact">
+							<li>선민승</li>
+							<li>백지수</li>
+							<li>이혜민</li>
+							<li>주동석</li>
+						</ul>
+
+				</div>
+
+				<div class="col-md-12 text-center copyright">
+					<p><small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small> 
+						<small class="block">Designed by <a href="http://gettemplates.co/" target="_blank">GetTemplates.co</a> Demo Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small></p>
+				</div>
+
+			</div>
+
+			
+
+		</div>
+	</footer>
+	<!-- </div> -->
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop">
+		    <img style="padding-top: 30%; width: 20px; height: auto;" src = "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-512.png"></img>
+		</a>
+	</div>
