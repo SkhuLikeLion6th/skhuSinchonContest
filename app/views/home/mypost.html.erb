@@ -36,7 +36,8 @@
     
     div#columns figure {
     	background: #fefefe;
-    	box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.4);
+    	border-radius: 4px;
+    	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
     	margin: 0 2px 15px;
     	padding-bottom: 10px;
     	transition: opacity .4s ease-in-out;
@@ -74,35 +75,25 @@
     }
     
     
-    
     @media screen and (max-width: 750px) { 
         #columns { column-gap: 0px; }
         #columns figure { width: 100%; }
     }
 </style>
 
-<div style="text-align: center; color: white; margin-top: 10px;">
-    <p>
-        당신이 가진 <%=@find_name%>카드는 총 <%=@wantpeoplenum%>명이 원하고 있습니다.
-    </p>
-    <p>
-        당신이 필요한 <%=@want_name%>카드는 총 <%=@needpeoplenum%>명이 가지고 있습니다.
-    </p>
-</div>
-
 
 <div id="columns">
-    <a style = "position: absolute; right: 4%; color: white; font-size: 20px; top: 10%;" href="/">나가기</a>
-    <% @matched_post.each do |post|%>
+    <a style = "position: absolute; right: 4%; font-size: 20px;" href="/">나가기</a>
+    <%@posts.each do |x|%>
     <figure>
-        <%=image_tag post.image %>
-        <!--<img src="//s3-us-west-2.amazonaws.com/s.cdpn.io/4273/cinderella.jpg">-->
+        <% unless x.image.nil?%>
+        <img src="<%=x.image%>"/>
+        <%end%>
 	    <figcaption>
-	        <p style="font-size: 20px; margin: 0px;">갖고있는 카드: <%=post.had_card%></p><br>
-	        <p style="font-size: 20px; margin: 0px;">교환 원하는 카드: <%=post.want_card%></p><br>
-	        <p style="font-size: 20px; margin: 0px;">카카오톡 아이디: <%=post.kakaoId%></p><br>
+	        <p>갖고있는 카드: <%=x.had_card%></p><br>
+	        <p>교환 원하는 카드: <%=x.want_card%></p><br>
+	        <a href="/home/destroy/<%=x.id%>" class="btn btn-primary">거래완료</a>
 	    </figcaption>
 	</figure>
 	<%end%>
-	
 </div>

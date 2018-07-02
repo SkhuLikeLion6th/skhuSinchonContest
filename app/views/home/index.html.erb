@@ -17,6 +17,8 @@
 						<%= link_to "/users/sign_out" do %>
 									<span class="btn-cta">Logout</span></a>
 						<% end %>
+						<a href="home/mypost/<%=current_user.id%>" class="btn-cta">My post</a>
+					
 					<% else %>
 						    <%=link_to "/users/sign_in" do %>
 							    	<span class="btn-cta">Login</span></a>
@@ -42,7 +44,16 @@
 					<div class="row row-mt-15em">
 						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
 							<span style="padding-left: 2.3%;" class="intro-text-small">포토카드교환을위한 <a href="#" target="_blank">platform</a></span>
-							<h1 class="cursive-font">ㅍㅌㅋㄷ</h1>	
+							<h1 class="cursive-font">ㅍㅌㅋㄷ</h1>
+							<div class="row form-group">
+													<div class="col-md-12">
+														<% if user_signed_in? %>
+														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+														  Create Card
+														</button>
+														<%end%>
+													</div>
+												</div>
 						</div>
 						<div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
 							<div class="form-wrap">
@@ -52,6 +63,7 @@
 										<div class="tab-content-inner active" data-content="signup">
 											<h3 class="cursive-font">Search PhotoCard</h3>
 											<%= form_for @search, url: {action: "search"} do |f| %>
+
                                               <div class="field">
                                                 <%= f.label :singer_id %><br />
                                                 <%= f.collection_select :singer, Singer.order(:singer_name), :id, :singer_name, include_blank: true %>
@@ -62,18 +74,24 @@
                                                 </div>
                                                 <div class="field">
                                                 <%= f.label :had_card, "had card" %><br />
-                                                <%= f.grouped_collection_select :had_card, Singer.order(:singer_name), :members, :singer_name, :id, :member_name, include_blank: true %>   
-                                                </div>                                                
-                                              <div><%= f.submit "Search", class: "btn btn-primary"%></div>
+                                                <%= f.grouped_collection_select :had_card, Singer.order(:singer_name), :member, :singer_name, :id, :member_name, include_blank: true %>   
+                                                </div> 
+                                                <div class="field">
+                                                <%= f.label :want_card, "want card" %><br />
+                                                <%= f.grouped_collection_select :want_card, Singer.order(:singer_name), :member, :singer_name, :id, :member_name, include_blank: true %>   
+                                                </div> 
+                                                <div class="field">
+                                                <%= f.label :change_type %><br />
+                                                <%= f.collection_select :change_type, Changetype.order(:change), :id, :change, include_blank: true %>
+                                                </div>
+                                                <div class="field">
+                                                <%= f.label :area, "area" %><br />
+                                                <%= f.grouped_collection_select :area, Changetype.order(:change), :areas, :change, :id, :area, include_blank: true %>   
+                                                </div>
+                                            
+                                              <div style = "margin-top: 20px;"><%= f.submit "Search", class: "btn btn-primary"%></div>
                                             <% end %>
-												<div class="row form-group">
-													<div class="col-md-12">
-														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-														  Create Card
-														</button>
-													</div>
-													
-												</div>
+												
 											</form>	
 										</div>
 
@@ -100,35 +118,47 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		         <form action="/home/create" method="post" enctype="multipart/form-data">
-			        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-			        <input type="hidden" id="user_id" name="user_id" value="current_user">
+		         <!--<form action="/home/create" method="post" enctype="multipart/form-data">-->
+			       <%= form_for @post, url: {action: "create"}, :html => {:multipart => true} do |f| %>
+			       											<%= f.hidden_field :user_id, value: current_user.id %>
+               <div class="field">
+                <%= f.label :singer_id %><br />
+                <%= f.collection_select :singer, Singer.order(:singer_name), :id, :singer_name, include_blank: true %>
+              </div>
+              <div class="field">
+                <%= f.label :album_id, "album" %><br />
+                <%= f.grouped_collection_select :album, Singer.order(:singer_name), :albums, :singer_name, :id, :album_name, include_blank: true %>   
+                </div>
+                <div class="field">
+                <%= f.label :had_card, "had card" %><br />
+                <%= f.grouped_collection_select :had_card, Singer.order(:singer_name), :member, :singer_name, :id, :member_name, include_blank: true %>   
+                </div> 
+                <div class="field">
+                <%= f.label :want_card, "want card" %><br />
+                <%= f.grouped_collection_select :want_card, Singer.order(:singer_name), :member, :singer_name, :id, :member_name, include_blank: true %>   
+                </div> 
+                <div class="field">
+                <%= f.label :change_type %><br />
+                <%= f.collection_select :change_type, Changetype.order(:change), :id, :change, include_blank: true %>
+                </div>
+                <div class="field">
+                <%= f.label :area, "area" %><br />
+                <%= f.grouped_collection_select :area, Changetype.order(:change), :areas, :change, :id, :area, include_blank: true %>   
+                </div>
+                <div class="field">
+                <%= f.label :kakaoId %><br />
+                <%= f.text_field :kakaoId %>
+                </div>
+                <input type = 'file' name = 'image' accept='image/*' >
+            
+              
 			        <p>
-			            <input id="input_singer" type="text" name="input_singer" placeholder="그룹명을 입력해주세요">
-			        </p>
-			        <p>
-			            <input id="input_album" type="text" name="input_album" placeholder="앨범명을 입력해 주세요">
-			        </p>
-			        <p>
-			            <input id="input_had_card" type="text" name="input_had_card" placeholder="가지고 있는 카드멤버를 입력해주세요">
-			        </p>
-			        <p>
-			            <input id="input_want_card" type="text" name="input_want_card" placeholder="필요한 카드멤버를 입력해 주세요">
-			        </p>
-			        <p>
-			            <input id="input_change_type" type="text" name="input_change_type" placeholder="교환 방식을 입력해주세요">
-			        </p>
-			        <p>
-			            <input id="input_kakao_id" type="text" name="input_kakao_id" placeholder="카카오톡 아이디를 입력해 주세요">
-			        </p>
-			        <p>
-			        	<%= file_field_tag 'input_image' %>
 			        </p>
 				    <div class="modal-footer">
-				      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <input id="input_submit" type="submit"></input>
+				        <div><%= f.submit "Create", class: "btn btn-primary"%></div>
+                <% end %>
 			       </div>
-			    </form>
+			    <!--</form>-->
 		      </div>
 		    </div>
 		  </div>
@@ -147,26 +177,21 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Ll</td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>Lay</td>
-    </tr>
+  	<% if @ranking != nil
+  		@ranking.each_with_index do |rank,index| %>
+	  	<tr>
+	      <th scope="row"><%=(index+1)%></th>
+	      <td><%=rank.singer_member%></td>
+	    </tr>
+	    <%end%>
+  	<% else
+  		for index in 0..4 %>
+   		<tr>
+	      <th scope="row"><%=(index+1)%></th>
+	      <td>없음</td>
+	    </tr>
+	<%end
+	end %>
   </tbody>
 </table>
 
@@ -191,20 +216,21 @@
 		<div class="gtco-container">
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-					<h2 class="cursive-font">등록된 포토카드 매칭</h2>
+					<h2 class="cursive-font">현재 등록된 포토카드 목록</h2>
 					<section class="clubs py-3">
 		              <div class="cards row">
-		                <% @posts.each do |post|%>
+		                <% @postrandom.each do |post|%>
 		                    <div class='col-sm-12 col-md-6 col-lg-4'>
-		                      <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-		                        <img class="card-img-top" src="<%=post.image.url%>" alt="Card image cap">
-		                        <div class="card-body">
-		                          <h5 class="card-title">가수이름</h5>
-		                        </div>
-		                      </div>
+		                      <div class="card text-white bg-dark mb-3" style="max-width: 18rem; margin: auto;">
+		                        <%= image_tag post.image, class: "card-img-top"%>
+		                          <h5 style="margin-top: 20px;" class="card-title"><%=post.had_card%> 있음</h5>
+		                    	  	<h5 class="card-title"><%=post.want_card%> 구함</h5>
+		                        </div> <br/> <br/>
 		                    </div>
-		                  <%end%>
+		                <%end%>
+		                  
 		              </div>
+		                <button type="button" class="btn btn-light"><a href="/home/readall">더보기</a></button>
 		          	</section>
 		         </div>
 			</div>
@@ -216,18 +242,20 @@
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
 					<h2 class="cursive-font">ㅍㅌㅋㄷ 사용매뉴얼</h2>
-					<p>ㅍㅌㄱㄷ를 사용하시는 분들은 아래 매뉴얼 및 주의사항을 잘 읽고 이용해주세요:) </p>
+					<p>ㅍㅌㄱㄷ를 사용하시는 분들은 아래 매뉴얼 및 주의사항을 잘 읽고 이용해주세요 :) </p>
 				</div>
 			
 			</div>
 		
 						</span>
 						<h3>STEP1: 회원가입</h3>
-						<p>회원가입을 할때에는 실명과 어쩌고저쩌고</p>
+						<p>회원가입을 할때에는 실명과 이메일, 그리고 6자 이상의 비밀번호를 입력해 주세요.</p>
 						<h3>STEP2: 본인이 원하는 포토카드를 검색해주세요</h3>
-						<p>검색해 나오는 분의 포토카드와 교환하려는 포토카드가 일치하면 카톡아이디를 통해 연락해주세요!</p>
-						<h3>주의사항</h3>
-						<p></p>
+						<p>검색해 나오는 분의 포토카드와 교환하려는 포토카드가 일치하면 카톡아이디를 통해 연락해 주세요.</p>
+						<h3>STEP3: 본인이 원하는 포토카드가 없다면 새롭게 등록해주세요</h3>
+						<p>가수, 앨범, 가지고 있는 포토카드, 필요한 포토카드, 카톡 아이디를 정확하게 입력해서 다른 분들이 당신의 포토카드를 찾을 수 있게 해주세요.</p>
+						<h3>주의사항 !</h3>
+						<p>카톡을 통해 서로 교환이 이루어진 포토카드의 경우 마이페이지에서 교환완료 버튼을 눌러 다른 분들이 헷갈리지 않게 해주세요.</p>
 					</div>
 				
 
@@ -248,14 +276,14 @@
 				
 				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
 					<div class="feature-center">
-						<span class="counter js-counter" data-from="0" data-to="6" data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter js-counter" data-from="0" data-to="<%=@singernum%>" data-speed="5000" data-refresh-interval="50">1</span>
 						<span class="counter-label">그룹</span>
 
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
 					<div class="feature-center">
-						<span class="counter js-counter" data-from="0" data-to="43" data-speed="5000" data-refresh-interval="50">1</span>
+						<span class="counter js-counter" data-from="0" data-to="<%=@albumnum%>" data-speed="5000" data-refresh-interval="50">1</span>
 						<span class="counter-label">앨범</span>
 					</div>
 				</div>
@@ -302,7 +330,7 @@
 				</div>
 
 				<div class="col-md-12 text-center copyright">
-					<p><small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small> 
+					<p><small class="block">&copy; 2018. All Rights Reserved.</small> 
 						<small class="block">Designed by <a href="http://gettemplates.co/" target="_blank">GetTemplates.co</a> Demo Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small></p>
 				</div>
 
@@ -321,3 +349,9 @@
 		    <img style="padding-top: 30%; width: 20px; height: auto;" src = "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-512.png"></img>
 		</a>
 	</div>
+<style>
+	.card-img-top{
+		width: 180px;
+		height: auto;
+	}
+</style>

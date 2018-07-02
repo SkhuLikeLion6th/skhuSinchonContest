@@ -3,7 +3,7 @@
   <div id="Signup_content">
     
     <p style="margin: 0px; margin-top: 10%; font-size: 40px; color: white;"><b>ㅍㅌ</b></p>
-    <p style="margin: 0px; font-size: 40px; color: white;"><b>ㅋㄷ</b></p>
+    <p style="margin: 0px; font-size: 40px; color: white; margin-top: -10px;"><b>ㅋㄷ</b></p>
   
     <form action="/users" method="post">
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
@@ -15,10 +15,10 @@
         <input id="Login_email" type="email" value="" name="user[email]" id="user_email" placeholder="이메일" style="width:70%; height:40px"></input>
       </p>
       <p>
-        <input id="Login_password" type="password" value="" name="user[password]" id="user_password" placeholder="비밀번호" style="width:70%; height:40px"></input>
+        <input id="Login_password" type="password" value="" name="user[password]" id="user_password" placeholder="비밀번호 6자리 이상" style="width:70%; height:40px"></input>
       </p>
       <p>
-        <input id="Login_password" type="password" value="" name="user[password_confirmation]" id="user_password_confirmation]" placeholder="비밀번호 확인" style="width:70%; height:40px"></input>
+        <input id="Login_password_confirmation" type="password" value="" name="user[password_confirmation]" id="user_password_confirmation]" placeholder="비밀번호 확인" style="width:70%; height:40px"></input>
       </p>
       <p>
         <input id="Login_button" type="submit" name="commit" value="Sign in" style="width:73%; height:40px; margin-top: 5%;"></input>
@@ -124,7 +124,7 @@
   #Signup_content{
       background-color: #131313;
       margin: auto;
-      height: 570px;
+      height: 520px;
       width: 360px;
       margin-bottom: 1%;
       border-top: 10px solid #FBB448;
@@ -159,7 +159,8 @@
   
   #Login_name,
   #Login_email, 
-  #Login_password{
+  #Login_password,
+  #Login_password_confirmation{
     font-family: "Godo";
       background-color: #131313;
       border-radius: 3px;

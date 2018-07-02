@@ -6,6 +6,7 @@ class CreateSearches < ActiveRecord::Migration
       t.string :had_card
       t.string :want_card
       t.string :change_type
+      t.string :area
 
       t.timestamps null: false
     end

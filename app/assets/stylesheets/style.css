@@ -68,7 +68,7 @@ body {
 }
 
 a {
-  color: #FBB448;
+  color: white;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
@@ -124,6 +124,12 @@ h1, h2, h3, h4, h5, h6, figure {
   z-index: 1001;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+.card-image-top{
+  width: 200px;
+  height: 300px;
+}
+
 @media screen and (max-width: 768px) {
   .gtco-nav {
     padding: 20px 0;
@@ -1350,7 +1356,7 @@ form label {
 .btn {
   margin-right: 4px;
   margin-bottom: 4px;
-  font-family: "Lato", Arial, sans-serif;
+  font-family: "Godo";
   font-size: 16px;
   font-weight: 400;
   -webkit-border-radius: 4px;

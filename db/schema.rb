@@ -11,11 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180630132439) do
+ActiveRecord::Schema.define(version: 20180630153915) do
 
   create_table "albums", force: :cascade do |t|
     t.integer  "singer_id"
     t.string   "album_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "areas", force: :cascade do |t|
+    t.string   "area"
+    t.integer  "changetype_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "changetypes", force: :cascade do |t|
+    t.string   "change"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,7 +46,8 @@ ActiveRecord::Schema.define(version: 20180630132439) do
     t.string   "had_card"
     t.string   "want_card"
     t.string   "change_type"
-    t.string   "kakao_id"
+    t.string   "area"
+    t.string   "kakaoId"
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -53,6 +67,7 @@ ActiveRecord::Schema.define(version: 20180630132439) do
     t.string   "had_card"
     t.string   "want_card"
     t.string   "change_type"
+    t.string   "area"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
